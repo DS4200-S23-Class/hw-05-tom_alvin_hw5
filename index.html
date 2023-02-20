@@ -3,12 +3,84 @@
 
 <head>
     <meta charset=utf-8/>
+    <!-- Link stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <script src='js/d3.v6.1.1/d3.min.js'></script>
+    <title>hw-05</title>
 </head>
 
 
 <body>
+    <h1>hw-05: Interactive Graph with D3</h1>
+
+    <div class = "left-column">
+        <div id = "vis-1">
 
 
+        </div>
+
+    </div>
+
+
+    <div class = "right-column">
+        <div >
+            <p> Last Point Clicked: </p>
+            <p id = "lastClicked"> </p>
+
+     
+        </div>
+
+
+
+        <form>
+
+            <div>
+                <p1>Choose the x-coordinate for your point.</p1>
+                    <select id="xCoordinate">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                    </select>
+            </div>
+
+            
+            <div>
+                <p1>Choose the y-coordinate for your point.</p1>
+                    <select id="yCoordinate">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                    </select>
+            </div>
+
+            <button type='button' id='addPoint'>Add custom point</button>
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script src='js/main.js'></script>
 </body>
 
 </html>
