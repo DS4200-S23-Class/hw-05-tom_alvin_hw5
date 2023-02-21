@@ -14,11 +14,6 @@ const FRAME1 = d3.select("#vis-1")
 function build_scatter_plot() {
 	d3.csv("data/scatter-data.csv").then((data) => {
 
-    // Build plot inside of .then 
-    // find max X
-    const MAX_X = d3.max(data, (d) => { return parseInt(d.x); });
-
-    const MAX_Y = d3.max(data, (d) => { return parseInt(d.y); });
     
     // Define scale functions that maps our data values 
     // (domain) to pixel values (range)
@@ -141,6 +136,87 @@ function build_scatter_plot() {
 
 build_scatter_plot();
 
+////////////////////////////////////////////////////////////////
 
+const FRAME2 = d3.select("#vis-2") 
+                  .append("svg") 
+                    .attr("height", FRAME_HEIGHT)   
+                    .attr("width", FRAME_WIDTH)
+                    .attr("class", "frame"); 
 
+function build_bar_plot() {
+	d3.csv("data/bar-data.csv").then((data) => {
+
+	  const xScale = d3.scaleBand()
+	  	.domain(data.map(function(d) { return d.category; }))
+	  	.range([0, VIS_WIDTH]).padding(0.1);
+
+	  const yScale = d3.scaleLinear()
+	  	.domain([0, 100])
+	  	.range([VIS_HEIGHT, 0]);
+
+		const g = FRAME2.append("g")
+	             .attr("transform", "translate(" + MARGINS.top + "," + MARGINS.left + ")");
+
+	  g.append("g")
+	   .attr("transform", "translate(0," + VIS_HEIGHT + ")")
+	   .call(d3.axisBottom(xScale));
+
+	  g.append("g")
+	   .call(d3.axisLeft(yScale).ticks(10))
+	   		.attr("font-size", "10px");
+
+ 		function mouseOver() {
+    	d3.select(this).attr("fill", "lightpink");
+		}
+
+		function mouseOut() {
+    	d3.select(this).attr("fill", "lightblue");
+		}
+
+		g.selectAll()
+	   .data(data)
+	   .enter()
+	   .append("rect")
+		   .attr("x", function(d) { return xScale(d.category); })
+		   .attr("y", function(d) { return yScale(d.amount); })
+		   .attr("width", xScale.bandwidth())
+		   .attr("height", function(d) { return VIS_HEIGHT - yScale(d.amount); })
+		   .attr("fill", "lightblue")
+		   .attr("class", "point")
+		   .on("mouseover", mouseOver)
+		   .on("mouseout", mouseOut);
+
+		const TOOLTIP = d3.select("#vis-2")
+						.append("div")
+							.attr("class", "tooltip")
+							.style("opacity", 0);
+
+		//mouseover
+		function handleMouseover(event, d) {
+			TOOLTIP.style("opacity", 1);
+		}
+
+		//mousemove
+		function handleMousemove(event, d) {
+			TOOLTIP.html("Category: " + d.category + "<br>Value: " + d.amount)
+					.style("left", (event.pageX + 10) + "px")
+					.style("top", (event.pageY - 50) + "px")
+		}
+
+		//mouseleave
+		function handleMouseleave(event, d) {
+			TOOLTIP.style("opacity", 0);
+		}
+
+		// add event listener to points
+		g.selectAll(".point")
+				.on("mouseover", handleMouseover)
+				.on("mousemove", handleMousemove)
+				.on("mouseleave", handleMouseleave);
+
+  });
+}
+
+build_bar_plot()
 
