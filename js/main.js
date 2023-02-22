@@ -46,19 +46,22 @@ function build_scatter_plot() {
     function borders() {
     	d3.select(this).classed("selected", !d3.select(this).classed("selected"));
 
+    	// if class is selected, set border
     	if(d3.select(this).classed("selected")) {
     		d3.select(this)
 			    .attr("stroke-width",  "4")
 			    .attr("stroke", "red");
     	}
 
+    	// if not, revert to no borders
     	else {
     		d3.select(this)
 			    .attr("stroke-width",  "0")
 			    .attr("stroke", "none");
     	}
 
-    	// also calls add_coordinates function when clicked
+    	// also calls add_coordinates function when clicked to add recently clicked
+    	// point
     	add_coordinates(this)
 	}
 
@@ -79,10 +82,6 @@ function build_scatter_plot() {
 		let x = document.getElementById("xCoordinate").value;
 		let y = document.getElementById("yCoordinate").value;
 
-		console.log(x);
-		console.log(y);
-
-
 		// Create SVG circle element
 		FRAME1.append("circle")  
 	          .attr("cx", (d) => { return (X_SCALE(x) + MARGINS.left); }) 
@@ -95,7 +94,7 @@ function build_scatter_plot() {
   		      .on("mouseout", mouseOut);
 	}
 
-	// gets coordinates for the label
+	// adds coordinates to the label
 	function add_coordinates(circle){
 		let x = Math.round(X_SCALE.invert(d3.select(circle).attr('cx') - MARGINS.left));
 		let y = Math.round(Y_SCALE.invert(d3.select(circle).attr('cy') - MARGINS.top));
@@ -104,8 +103,6 @@ function build_scatter_plot() {
 		//This list the most recent coordinate clicked
 		let coordinate = `(${x}, ${y})`;
 		document.getElementById("lastClicked").innerHTML = coordinate;
-		console.log(x);
-		console.log(y);
 	}
 
 	// adds event listener so that when the add point button is clicked, a point is added
@@ -137,6 +134,7 @@ function build_scatter_plot() {
     });
 }
 
+// builds scatter plot
 build_scatter_plot();
 
 ////////////////////////////////////////////////////////////////
@@ -177,16 +175,6 @@ function build_bar_plot() {
 	   .call(d3.axisLeft(Y_SCALE2).ticks(10))
 	   		.attr("font-size", "10px");
 
-	  // When you hover over the bar line, it turns pink
- 		function mouseOver() {
-    	d3.select(this).attr("fill", "lightpink");
-		}
-
-		// When you leave the line it goes back to blue
-		function mouseOut() {
-    	d3.select(this).attr("fill", "lightblue");
-		}
-
 		// Creates the svg element with the axes and bar lines filled in with blue
 		g.selectAll()
 	   .data(data)
@@ -197,8 +185,7 @@ function build_bar_plot() {
 		   .attr("width", X_SCALE2.bandwidth())
 		   .attr("height", function(d) { return VIS_HEIGHT - Y_SCALE2(d.amount); })
 		   .attr("fill", "lightblue")
-		   .on("mouseover", mouseOver)
-		   .on("mouseout", mouseOut);
+		   .attr("class", "point");
 
 		// Creates the tooltip for the visual so when you hover over the line, the values
 		// pop up
@@ -210,6 +197,7 @@ function build_bar_plot() {
 		//mouseover
 		function handleMouseover(event, d) {
 			TOOLTIP.style("opacity", 1);
+			d3.select(this).attr("fill", "lightpink");
 		}
 
 		//mousemove
@@ -222,10 +210,11 @@ function build_bar_plot() {
 		//mouseleave
 		function handleMouseleave(event, d) {
 			TOOLTIP.style("opacity", 0);
+			d3.select(this).attr("fill", "lightblue");
 		}
 
 		// add event listener to the bar lines
-		g.selectAll(".tooltip")
+		g.selectAll(".point")
 				.on("mouseover", handleMouseover)
 				.on("mousemove", handleMousemove)
 				.on("mouseleave", handleMouseleave)
