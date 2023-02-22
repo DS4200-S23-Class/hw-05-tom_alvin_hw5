@@ -1,22 +1,39 @@
+/*Centers the main header*/
 h1 {
     text-align: center;
 }
 
+h2 {
+    text-align: center;
+}
+
+/*The left column takes up 60% of the left portion of the page*/
 .left-column {
  	width: 60%;
     float: left;
 }
 
+/*The right column takes up 40% of the left portion of the page*/
 .right-column {
     width: 40%;
     float: right;
 }
 
+/*This customizes the tooltip bar when a user hovers over a line on the bar graph*/
 .tooltip {
     position: absolute;
-    background-color: grey;
+    background-color: lightgrey;
     border:  solid;
     border-width: 2px;
     border-radius: 5px;
     padding: 5px;
+}
+
+/*Aligns the acknowledgements at the bottom of the page*/
+#footer {
+    height: 100px; 
+    width:100%;
+    position: absolute;
+    left: 0;
+    bottom: 0; 
 }

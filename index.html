@@ -1,6 +1,8 @@
+<!--Creates HTML page-->
 <!DOCTYPE html>
 <html> 
 
+<!--links the D3 and stylesheet and makes a title for webpage-->
 <head>
     <meta charset=utf-8/>
     <!-- Link stylesheet -->
@@ -11,8 +13,10 @@
 
 
 <body>
+    <!--The title for the page-->
     <h1>hw-05: Interactive Graph with D3</h1>
 
+    <!--The div for the interactive graph-->
     <div class = "left-column">
         <div id = "vis-1">
 
@@ -21,7 +25,7 @@
 
     </div>
 
-
+    <!--This is where the coordinates are listed and where you can add new points-->
     <div class = "right-column">
         <div >
             <p> Last Point Clicked: </p>
@@ -35,6 +39,7 @@
         <form>
 
             <div>
+                <!--These are all the options for the x-coordinate-->
                 <p1>Choose the x-coordinate for your point.</p1>
                     <select id="xCoordinate">
                         <option>1</option>
@@ -51,6 +56,7 @@
 
             
             <div>
+                <!--These are all the options for the y-coordinate-->
                 <p1>Choose the y-coordinate for your point.</p1>
                     <select id="yCoordinate">
                         <option>1</option>
@@ -65,11 +71,13 @@
                     </select>
             </div>
 
+            <!--This adds the button to add the point-->
             <button type='button' id='addPoint'>Add custom point</button>
         </form>
 
     </div>
 
+    <!--This is where the bar graph is located-->
     <div class = "left-column">
         <div id = "vis-2">
 
@@ -77,15 +85,14 @@
 
     </div>
 
-
-
-
-
-
-
-
-
-
+    <div id="footer">
+        <!--Makes an acknowledgement header-->
+        <h2> Acknowledgements</h2>
+            <ul>
+                <!--All the resources we used in order to complete out assignment-->
+                <li>https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js</li>
+            </ul>
+    </div>
 
     <script src='js/main.js'></script>
 </body>
